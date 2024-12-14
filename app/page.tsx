@@ -1,19 +1,21 @@
-import OpenAI from "openai";
+"use client"
+
+import React, { useState } from "react";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import TextField from "./components/TextField";
+import TextArea from "./components/TextArea";
+import Spacer from "./components/Spacer";
+import Bio from "./components/Bio";
+import Experience from "./components/Experience";
 
 export default function Home() {
-  const openai = new OpenAI({
-    organization: "org-DXn5sGakRYYol5XnJ5Fx17U6",
-    project: "proj_XsxgtXfc9GoZFeEOQQiKFq7o"
-  });
   return (
-    <>
-      <nav></nav>
-      <main>
-        <input type="text" name="name" placeholder="Full name"/>
-        <label htmlFor="bio">About me</label>
-        <textarea name="bio" id="bio"></textarea>
-        <button>✨Suggestions</button>
-      </main>
-    </>
+    <main className="flex flex-col max-w-lg mx-auto py-10">
+      <TextField name="name" onChange={() => ""} placeholder="Full name" className="mx-2 text-4xl ring-transparent outline-none border-none" />
+      <Spacer size="20px" />
+      <Bio />
+      <Experience />
+    </main>
   );
+  
 }
