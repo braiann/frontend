@@ -1,6 +1,6 @@
 import { ChangeEvent } from "react"
 
-const TextArea = ({name, id, value, onChange, animateThinking}: {name: string, id: string, value: string, onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void, animateThinking: boolean}) => {
+const TextArea = ({name, id, value, onChange, animateThinking, replaceHover}: {name: string, id?: string, value: string, onChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void, animateThinking?: boolean, replaceHover?: boolean}) => {
     return <div className="relative">
         <textarea
             name={name}
@@ -13,8 +13,9 @@ const TextArea = ({name, id, value, onChange, animateThinking}: {name: string, i
                 hover: hover:ring-white hover:ring-opacity-50
                 hover:bg-[linear-gradient(-25deg,rgba(0,0,0,0.07)0%,rgba(0,0,0,0.03)100%)]
                 focus:bg-[linear-gradient(-25deg,rgba(0,0,0,0.05)0%,rgba(0,0,0,0.05)100%)]
-                ${!value && "ring-1 ring-black ring-opacity-5"}
+                ${!value && "border-2 border-black border-opacity-10"}
                 ${animateThinking && `toggle-thinking`}
+                ${replaceHover && "animate-blurpulse"}
             `}
         ></textarea>
     </div>

@@ -1,4 +1,3 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import TextArea from "./TextArea";
 import { useState } from "react";
 
@@ -7,29 +6,41 @@ const Bio = () => {
     const [suggestions, setSuggestions] = useState([]);
     const [rewrite, setRewrite] = useState("");
     const [loading, setLoading] = useState(false);
+    const [replaceHover, setReplaceHover] = useState(false);
 
     const handleSuggestions = async () => {
         setLoading(true);
         setRewrite("");
         setSuggestions([]);
-        try {
-        const API_KEY = process.env.GEMINI_API_KEY;
-        if (!API_KEY) throw new Error("API key not found");
+        try { 
+            const prompt = `Generate this JSON (DO NOT INCLUDE the notation just the plain JSON, so no backticks json preceding and no ending backticks): {suggestions: [suggestion, suggestion, suggestion], rewrite} with each suggestion being a short suggestion about the resume About Me field and a final rewrite in a length that would be appropriate for a About Me of a resume in the same language as input language. Do not answer back any other text just the plain JSON. This is the About Me: ${bio}. (Answer in input language). No placeholders, all text should be final.`;
 
-        const genAI = new GoogleGenerativeAI(API_KEY);
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
-
-        const prompt = `Generate this JSON (DO NOT INCLUDE the notation just the plain JSON, so no backticks json preceding and no ending backticks): {suggestions: [suggestion, suggestion, suggestion], rewrite} with each suggestion being a suggestion about the resume About Me field and a final rewrite in roughly the same length as the input About Me. Do not answer back any other text just the plain JSON. Answer in input language. This is the About Me: ${bio}`;
-
-        const result = await model.generateContent(prompt);
-        const response = await result.response;
-        const results = JSON.parse(response.text());
-        setLoading(false);
-        setRewrite(results.rewrite || "");
-        setSuggestions(results.suggestions || []);
+            const apiUrl = 'http://localhost:5000/api/generate';
+            const response = await fetch(apiUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({input: prompt}),
+            })
+            console.log(response)
+            const results = JSON.parse(await response.text());
+            setLoading(false);
+            setRewrite(results.rewrite || "");
+            setSuggestions(results.suggestions || []);
         } catch (error) {
-        console.log("Error generating suggestions: ", error);
+            console.log("Error generating suggestions: ", error);
         }
+    }
+
+    const handleReplaceHover = () => {
+        setReplaceHover(prev => !prev);
+    }
+
+    const handleReplace = () => {
+        setBio(rewrite);
+        setRewrite("");
+        setReplaceHover(false)
     }
     
     return <> 
@@ -41,6 +52,7 @@ const Bio = () => {
             value={bio}
             onChange={(e) => setBio(e.target.value)}
             animateThinking={loading}
+            replaceHover={replaceHover}
         />
         <button
             onClick={handleSuggestions}
@@ -63,7 +75,7 @@ const Bio = () => {
         {suggestions.length > 0 && (
             <ul>
             {suggestions.map((suggestion, index) => (
-                <li key={index} className="flex justify-between items-center bg-black bg-opacity-5 rounded-lg px-4 py-2 mb-2">
+                <li key={index} className={`flex justify-between items-center bg-black bg-opacity-5 rounded-lg px-4 py-2 mb-2`}>
                     <div className="flex gap-2 items-center">
                         <div className="bg-indigo-500 w-9 h-9 aspect-square flex items-center justify-center rounded-full">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" strokeWidth={1.5} stroke="white" className="size-6">
@@ -101,7 +113,12 @@ const Bio = () => {
             <button className="bg-black bg-opacity-5 p-1 w-full rounded-md hover:bg-opacity-10 active:bg-opacity-15">
                 Copy
             </button>
-            <button className="bg-black bg-opacity-5 p-1 w-full rounded-md hover:bg-opacity-10 active:bg-opacity-15">
+            <button
+                className="bg-black bg-opacity-5 p-1 w-full rounded-md hover:bg-opacity-10 active:bg-opacity-15"
+                onMouseEnter={handleReplaceHover}
+                onMouseLeave={handleReplaceHover}
+                onClick={handleReplace}
+            >
                 Replace
             </button>
             </div>

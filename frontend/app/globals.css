@@ -13,6 +13,10 @@ body {
   font-family: 'Instrument Sans';
 }
 
+button {
+  outline: none;
+}
+
 label {
   font-weight: 600;
 }
@@ -20,6 +24,9 @@ label {
 .bg-zoom {
   background-size: 1400%;
   background-position: bottom right;
+  transition: background-image 1s ease-in-out;
+  transition: box-shadow 1s ease-in-out;
+  box-shadow: 0 0 0 rgba(0,0,0,0), 0 0 0 rgba(0,0,0,0);
 }
 
 .toggle-thinking {
@@ -31,16 +38,51 @@ label {
 @keyframes thinking {
   0% {
     background-position: bottom right;
-    color: initial;
+    opacity: 1;
+    scale: 1;
+    filter: blur(0);
   }
   30% {
-    color: #00000055;
+    opacity: 0.4;
+    scale: 0.98;
+    filter: blur(1);
   }
   70% {
-    color: initial;
+    color: 1;
+    scale: 1;
+    filter: blur(0);
   }
   100% {
     background-position: center center;
-    
+  }
+}
+
+.animate-blurpulse {
+  animation-name: blur-pulse;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  box-shadow:
+    2px 2px 20px rgba(15,244,198,1),
+    -2px -2px 20px rgba(214,143,214,1)
+  ;
+}
+
+@keyframes blur-pulse {
+  0% {
+    filter: blur(0);
+    color: initial;
+  }
+  50% {
+    filter: blur(1);
+    color: rgba(214,143,214,1);
+  }
+  65% {
+    filter: blur(1);
+    color: rgba(15,244,198,1);
+  }
+  100%{
+    filter: blur(0);
+    color: initial;
   }
 }

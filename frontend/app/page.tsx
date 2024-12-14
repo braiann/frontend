@@ -6,13 +6,15 @@ import TextField from "./components/TextField";
 import TextArea from "./components/TextArea";
 import Spacer from "./components/Spacer";
 import Bio from "./components/Bio";
+import Experience from "./components/Experience";
 
 export default function Home() {
   return (
     <main className="flex flex-col max-w-lg mx-auto py-10">
-      <TextField name="name" placeholder="Full name" className="mx-2 text-4xl ring-transparent outline-none border-none" />
+      <TextField name="name" onChange={() => ""} placeholder="Full name" className="mx-2 text-4xl ring-transparent outline-none border-none" />
       <Spacer size="20px" />
       <Bio />
+      <Experience />
     </main>
   );
   
