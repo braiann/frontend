@@ -10,12 +10,14 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
+    "@reduxjs/toolkit": "^2.5.0",
     "axios": "^1.7.9",
     "dotenv": "^16.4.7",
     "next": "15.1.0",
     "openai": "^4.76.1",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-redux": "^9.2.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
