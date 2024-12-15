@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import TextField from "./components/TextField";
 import Spacer from "./components/Spacer";
 import Bio from "./components/Bio";
@@ -9,10 +9,7 @@ import { RootState } from "./store";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import store from "./store";
 import { updateName } from "./store/resumeSlice";
-
-interface Resume {
-    name: string;
-}
+import { Resume } from "./types/resume";
 
 export default function Home() {
     const resume: Resume = useSelector((state: RootState) => state.resume);

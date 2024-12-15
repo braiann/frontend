@@ -1,10 +1,16 @@
+import { useDispatch, useSelector } from "react-redux";
+import { Resume } from "../types/resume";
 import TextArea from "./TextArea";
 import { useState } from "react";
+import { RootState } from "../store";
+import { updateBio } from "../store/resumeSlice";
 
 const Bio = () => {
-    const [bio, setBio] = useState("");
+    const resume: Resume = useSelector((state: RootState) => state.resume);
     0;
-    const [suggestions, setSuggestions] = useState([]);
+    const dispatch = useDispatch();
+
+    const [suggestions, setSuggestions] = useState<string[]>([]);
     const [rewrite, setRewrite] = useState("");
     const [loading, setLoading] = useState(false);
     const [replaceHover, setReplaceHover] = useState(false);
@@ -14,9 +20,9 @@ const Bio = () => {
         setRewrite("");
         setSuggestions([]);
         try {
-            const prompt = `Generate this JSON (DO NOT INCLUDE the notation just the plain JSON, so no backticks json preceding and no ending backticks): {suggestions: [suggestion, suggestion, suggestion], rewrite} with each suggestion being a short suggestion about the resume About Me field and a final rewrite in a length that would be appropriate for a About Me of a resume in the same language as input language. Do not answer back any other text just the plain JSON. This is the About Me: ${bio}. (Answer in input language). No placeholders, all text should be final.`;
+            const prompt = `Generate this JSON (DO NOT INCLUDE the notation just the plain JSON, so no backticks json preceding and no ending backticks): {suggestions: [suggestion, suggestion, suggestion], rewrite} with each suggestion being a short suggestion about the resume About Me field and a final rewrite in a length that would be appropriate for a About Me of a resume in the same language as input language. Do not answer back any other text just the plain JSON. This is the About Me: ${resume.bio}. (Answer in input language). No placeholders, all text should be final.`;
 
-            const apiUrl = "http://localhost:5000/api/generate";
+            const apiUrl = process.env.GENERATE_API_URL || "";
             const response = await fetch(apiUrl, {
                 method: "POST",
                 headers: {
@@ -31,15 +37,17 @@ const Bio = () => {
             setSuggestions(results.suggestions || []);
         } catch (error) {
             console.log("Error generating suggestions: ", error);
+            setLoading(false);
+            alert("Failed to generate suggestions. Please try again."); // TODO: improve UI
         }
     };
 
     const handleReplaceHover = () => {
-        setReplaceHover((prev) => !prev);
+        setReplaceHover(!replaceHover);
     };
 
     const handleReplace = () => {
-        setBio(rewrite);
+        dispatch(updateBio(rewrite));
         setRewrite("");
         setReplaceHover(false);
     };
@@ -53,8 +61,8 @@ const Bio = () => {
                 <TextArea
                     name="bio"
                     id="bio"
-                    value={bio}
-                    onChange={(e) => setBio(e.target.value)}
+                    value={resume.bio || ""}
+                    onChange={(e) => dispatch(updateBio(e.target.value))}
                     animateThinking={loading}
                     replaceHover={replaceHover}
                 />

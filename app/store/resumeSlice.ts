@@ -1,11 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Resume } from "../types/resume";
 
-interface ResumeState {
-    name: string;
-}
-
-const initialState: ResumeState = {
+const initialState: Resume = {
     name: "",
+    bio: "",
 };
 
 const resumeSlice = createSlice({
@@ -14,9 +12,12 @@ const resumeSlice = createSlice({
     reducers: {
         updateName(state, action: PayloadAction<string>) {
             state.name = action.payload;
-        }
+        },
+        updateBio(state, action: PayloadAction<string>) {
+            state.bio = action.payload;
+        },
     }
 });
 
-export const { updateName } = resumeSlice.actions;
+export const { updateName, updateBio } = resumeSlice.actions;
 export default resumeSlice.reducer;
