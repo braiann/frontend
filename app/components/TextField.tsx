@@ -24,7 +24,7 @@ const TextField = ({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className={`${value ? "ring-2" : "ring-0"} ring-black ring-opacity-10 px-2 outline-none rounded-md bg-transparent ${className || ""} ${instrumentSans}`}
+        className={`${value ? "ring-0" : "ring-2"} ring-black ring-opacity-10 px-2 outline-none rounded-md bg-transparent ${className || ""} ${instrumentSans}`}
       />
     );
   };

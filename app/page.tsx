@@ -8,10 +8,14 @@ import Spacer from "./components/Spacer";
 import Bio from "./components/Bio";
 import Experience from "./components/Experience";
 
+interface Resume {
+  name: string;
+}
+
 export default function Home() {
   return (
     <main className="flex flex-col max-w-lg mx-auto py-10">
-      <TextField name="name" onChange={() => ""} placeholder="Full name" className="mx-2 text-4xl ring-transparent outline-none border-none" />
+      <TextField name="name" onChange={() => ""} placeholder="Full name" className="text-4xl ring-transparent outline-none border-none" />
       <Spacer size="20px" />
       <Bio />
       <Experience />
