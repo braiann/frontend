@@ -89,7 +89,7 @@ const Bio = () => {
 
             <div className="px-2">
                 {suggestions.length > 0 && (
-                    <ul>
+                    <ul className="flex gap-2">
                         {suggestions.map((suggestion, index) => (
                             <SuggestionCard
                                 index={index}

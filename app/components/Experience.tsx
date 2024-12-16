@@ -25,6 +25,8 @@ const Experience = () => {
     const [suggestions, setSuggestions] = useState<string[]>([]);
     const [rewrites, setRewrites] = useState<Rewrite[]>([]);
 
+    const [replaceHover, setReplaceHover] = useState(false);
+
     const handleSuggestions = async () => {
         try {
             const prompt = `Generate this JSON (DO NOT INCLUDE the notation just the plain JSON, so no backticks json preceding and no ending backticks): {suggestions: [suggestion, suggestion, suggestion], rewrites: [{position, company, description}, ...]} with each suggestion being a short suggestion about the resume Experience section and a final rewrite in a length that would be appropriate for each field, in the same language as input language. Do not answer back any other text just the plain JSON. This is the input: ${JSON.stringify(
@@ -76,6 +78,10 @@ const Experience = () => {
 
     const clearRewrite = (index: number) => {
         setRewrites((prevArray) => removeByIndex(prevArray, index));
+    };
+
+    const handleReplaceHover = (index: number) => {
+        setReplaceHover(!replaceHover);
     };
 
     return (
@@ -148,6 +154,7 @@ const Experience = () => {
                             )
                         }
                         value={experience.description}
+                        replaceHover={replaceHover}
                     />
                     {rewrites[index] && (
                         <>
@@ -185,8 +192,12 @@ const Experience = () => {
                                     </button>
                                     <button
                                         className="bg-black bg-opacity-5 p-1 w-full rounded-md hover:bg-opacity-10 active:bg-opacity-15"
-                                        // onMouseEnter={handleReplaceHover}
-                                        // onMouseLeave={handleReplaceHover}
+                                        onMouseEnter={() =>
+                                            handleReplaceHover(index)
+                                        }
+                                        onMouseLeave={() =>
+                                            handleReplaceHover(index)
+                                        }
                                         // onClick={handleReplace}
                                     >
                                         Replace
