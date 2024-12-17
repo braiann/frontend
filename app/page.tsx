@@ -4,12 +4,12 @@ import React from "react";
 import TextField from "./components/TextField";
 import Spacer from "./components/Spacer";
 import Bio from "./components/Bio";
-import Experience from "./components/Experience";
 import { RootState } from "./store";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import store from "./store";
 import { updateName } from "./store/resumeSlice";
 import { Resume } from "./types/resume";
+import WorkExperience from "./components/Experience";
 
 export default function Home() {
     const resume: Resume = useSelector((state: RootState) => state.resume);
@@ -27,7 +27,7 @@ export default function Home() {
                 />
                 <Spacer size="20px" />
                 <Bio />
-                <Experience />
+                <WorkExperience />
             </main>
         </Provider>
     );

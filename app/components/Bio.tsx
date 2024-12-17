@@ -26,7 +26,13 @@ const Bio = () => {
         setRewrite("");
         setSuggestions([]);
         try {
-            const prompt = `Generate this JSON (DO NOT INCLUDE the notation just the plain JSON, so no backticks json preceding and no ending backticks): {suggestions: [suggestion, suggestion, suggestion], rewrite} with each suggestion being a short suggestion about the resume About Me field and a final rewrite in a length that would be appropriate for a About Me of a resume in the same language as input language. Do not answer back any other text just the plain JSON. This is the About Me: ${resume.bio}. (Answer in input language). No placeholders, all text should be final.`;
+            const prompt = `Generate this JSON (DO NOT INCLUDE the notation just the plain JSON, so no backticks json preceding and no ending backticks): {suggestions: [suggestion, suggestion, suggestion], rewrite} with each suggestion being a short suggestion about the resume About Me field and a final rewrite in a length that would be appropriate for a About Me of a resume in the same language as input language. Do not answer back any other text just the plain JSON. This is the About Me: ${
+                resume.bio
+            }.
+            Extra context:
+            Experience: ${JSON.stringify(resume.experience)}
+            Name: ${resume.name}
+            (Answer in input language). No placeholders, all text should be final. NO BRACKETS`;
 
             const apiUrl =
                 process.env.GENERATE_API_URL ||

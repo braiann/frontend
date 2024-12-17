@@ -4,34 +4,38 @@ import TextArea from "./TextArea";
 import removeByIndex from "../utils/removeByIndex";
 import SuggestionsButton from "./SuggestionsButton";
 import SuggestionCard from "./SuggestionCard";
+import delay from "../utils/delay";
+import { Experience, Resume } from "../types/resume";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store";
+import { updateExperience } from "../store/resumeSlice";
+import Button from "./Button";
+import Checkmark from "./icons/Checkmark";
 
-interface WorkExperience {
-    position: string;
-    company: string;
-    startDate: Date;
-    endDate: Date;
-    description: string;
-    skills: string[];
-}
+const WorkExperience = () => {
+    const resume: Resume = useSelector((state: RootState) => state.resume);
+    const dispatch = useDispatch();
 
-interface Rewrite {
-    position: string;
-    company: string;
-    description: string;
-}
-
-const Experience = () => {
-    const [experiences, setExperiences] = useState<WorkExperience[]>([]);
     const [suggestions, setSuggestions] = useState<string[]>([]);
-    const [rewrites, setRewrites] = useState<Rewrite[]>([]);
+    const [rewrites, setRewrites] = useState<(Experience | undefined)[]>([]);
 
-    const [replaceHover, setReplaceHover] = useState(false);
+    const [thinkingStep, setThinkingStep] = useState(0);
+    const [replaceHoverIndex, setReplaceHoverIndex] = useState(-1);
+    const [showSuccessCheckmark, setShowSuccessCheckmark] = useState(-1);
 
     const handleSuggestions = async () => {
+        animateThinkingSteps();
+        setRewrites([]);
+        setSuggestions([]);
+
         try {
-            const prompt = `Generate this JSON (DO NOT INCLUDE the notation just the plain JSON, so no backticks json preceding and no ending backticks): {suggestions: [suggestion, suggestion, suggestion], rewrites: [{position, company, description}, ...]} with each suggestion being a short suggestion about the resume Experience section and a final rewrite in a length that would be appropriate for each field, in the same language as input language. Do not answer back any other text just the plain JSON. This is the input: ${JSON.stringify(
-                experiences
-            )}. (Answer in input language). No placeholders, all text should be final. No brackets to fill in, no blanks.`;
+            const prompt = `Generate this JSON (DO NOT INCLUDE the notation just the plain JSON, so no backticks json preceding and no ending backticks): {suggestions: [suggestion, suggestion, suggestion], rewrites: [{position, company, description}, ...]} with each suggestion being a short suggestion about the resume Experience section and a final rewrite in a length that would be appropriate for each field, in the same language as input language. Do not answer back any other text just the plain JSON. This is the input Experience JSON:
+                ${JSON.stringify(resume.experience)}.
+                This is some extra context:
+                Bio: ${resume.bio}
+                Name: ${resume.name}
+                Length of experiences array: ${resume.experience.length}
+                (Answer in input language). No placeholders, all text should be final. No brackets to fill in, no blanks.`;
 
             const apiUrl =
                 process.env.GENERATE_API_URL ||
@@ -52,36 +56,64 @@ const Experience = () => {
     };
 
     const handleAddExperience = () => {
-        const newExperience: WorkExperience = {
+        const newExperience: Experience = {
             position: "",
             company: "",
-            startDate: new Date(),
-            endDate: new Date(),
+            startDate: "",
+            endDate: "",
             description: "",
             skills: [],
         };
 
-        setExperiences((prev) => [...prev, newExperience]);
+        dispatch(
+            updateExperience({
+                index: resume.experience.length,
+                newExperience: newExperience,
+            })
+        );
     };
 
     const handleChangeExperienceField = (
         index: number,
-        field: keyof WorkExperience,
+        field: keyof Experience,
         value: string
     ) => {
-        setExperiences((prev) =>
-            prev.map((experience, i) =>
-                i === index ? { ...experience, [field]: value } : experience
-            )
+        dispatch(
+            updateExperience({
+                index,
+                newExperience: {
+                    ...resume.experience[index],
+                    [field]: value,
+                },
+            })
         );
     };
 
     const clearRewrite = (index: number) => {
-        setRewrites((prevArray) => removeByIndex(prevArray, index));
+        setRewrites((prevArray) =>
+            prevArray.map((rewrite, i) => (index === i ? undefined : rewrite))
+        );
     };
 
     const handleReplaceHover = (index: number) => {
-        setReplaceHover(!replaceHover);
+        setReplaceHoverIndex(index);
+    };
+
+    const animateThinkingSteps = async () => {
+        let i = 0;
+        for (i = 0; i < resume.experience.length; i++) {
+            setThinkingStep((prev) => prev + 1);
+            await delay(300);
+        }
+        await delay((i + 1) * 500);
+        setThinkingStep(0);
+    };
+
+    const handleReplace = (index: number) => {
+        if (!rewrites[index]) return;
+        dispatch(updateExperience({ index, newExperience: rewrites[index] }));
+        clearRewrite(index);
+        setReplaceHoverIndex(-1);
     };
 
     return (
@@ -93,7 +125,7 @@ const Experience = () => {
                 className="top-4 -left-5"
             />
             {suggestions.length > 0 && (
-                <ul>
+                <ul className="flex gap-2">
                     {suggestions.map((suggestion, index) => (
                         <SuggestionCard
                             index={index}
@@ -108,7 +140,7 @@ const Experience = () => {
                     ))}
                 </ul>
             )}
-            {experiences.map((experience, index) => (
+            {resume.experience.map((experience, index) => (
                 <div key={index}>
                     {index > 0 && <hr className="my-3"></hr>}
                     <div className="w-full max-w-full flex gap-2">
@@ -154,7 +186,8 @@ const Experience = () => {
                             )
                         }
                         value={experience.description}
-                        replaceHover={replaceHover}
+                        replaceHover={replaceHoverIndex === index}
+                        animateThinking={thinkingStep > index}
                     />
                     {rewrites[index] && (
                         <>
@@ -187,18 +220,35 @@ const Experience = () => {
                                 </div>
                                 <p>{rewrites[index].description}</p>
                                 <div className="flex gap-2 mb-1 mt-3">
-                                    <button className="bg-black bg-opacity-5 p-1 w-full rounded-md hover:bg-opacity-10 active:bg-opacity-15">
-                                        Copy
-                                    </button>
+                                    <Button
+                                        onClick={() => {
+                                            navigator.clipboard.writeText(
+                                                rewrites[index]?.description ||
+                                                    ""
+                                            );
+                                            setShowSuccessCheckmark(index);
+                                            setTimeout(
+                                                () =>
+                                                    setShowSuccessCheckmark(-1),
+                                                500
+                                            );
+                                        }}
+                                    >
+                                        {showSuccessCheckmark == index ? (
+                                            <Checkmark />
+                                        ) : (
+                                            "Copy"
+                                        )}
+                                    </Button>
                                     <button
                                         className="bg-black bg-opacity-5 p-1 w-full rounded-md hover:bg-opacity-10 active:bg-opacity-15"
                                         onMouseEnter={() =>
                                             handleReplaceHover(index)
                                         }
                                         onMouseLeave={() =>
-                                            handleReplaceHover(index)
+                                            handleReplaceHover(-1)
                                         }
-                                        // onClick={handleReplace}
+                                        onClick={() => handleReplace(index)}
                                     >
                                         Replace
                                     </button>
@@ -231,4 +281,4 @@ const Experience = () => {
     );
 };
 
-export default Experience;
+export default WorkExperience;
