@@ -10,6 +10,7 @@ import store from "./store";
 import { updateName } from "./store/resumeSlice";
 import { Resume } from "./types/resume";
 import WorkExperience from "./components/Experience";
+import Education from "./components/Education";
 
 export default function Home() {
     const resume: Resume = useSelector((state: RootState) => state.resume);
@@ -28,6 +29,7 @@ export default function Home() {
                 <Spacer size="20px" />
                 <Bio />
                 <WorkExperience />
+                <Education />
             </main>
         </Provider>
     );

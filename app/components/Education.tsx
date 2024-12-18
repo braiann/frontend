@@ -5,19 +5,19 @@ import removeByIndex from "../utils/removeByIndex";
 import SuggestionsButton from "./SuggestionsButton";
 import SuggestionCard from "./SuggestionCard";
 import delay from "../utils/delay";
-import { Experience, Resume } from "../types/resume";
+import { Resume, Study } from "../types/resume";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
-import { removeExperience, updateExperience } from "../store/resumeSlice";
 import Button from "./Button";
 import Checkmark from "./icons/Checkmark";
+import { removeEducation, updateEducation } from "../store/resumeSlice";
 
-const WorkExperience = () => {
+const Education = () => {
     const resume: Resume = useSelector((state: RootState) => state.resume);
     const dispatch = useDispatch();
 
     const [suggestions, setSuggestions] = useState<string[]>([]);
-    const [rewrites, setRewrites] = useState<(Experience | undefined)[]>([]);
+    const [rewrites, setRewrites] = useState<(Study | undefined)[]>([]);
 
     const [thinkingStep, setThinkingStep] = useState(0);
     const [replaceHoverIndex, setReplaceHoverIndex] = useState(-1);
@@ -29,12 +29,13 @@ const WorkExperience = () => {
         setSuggestions([]);
 
         try {
-            const prompt = `Generate this JSON (DO NOT INCLUDE the notation just the plain JSON, so no backticks json preceding and no ending backticks): {suggestions: [suggestion, suggestion, suggestion], rewrites: [{position, company, description}, ...]} with each suggestion being a short suggestion about the resume Experience section and a final rewrite in a length that would be appropriate for each field, in the same language as input language. Do not answer back any other text just the plain JSON. This is the input Experience JSON:
-                ${JSON.stringify(resume.experience)}.
+            const prompt = `Generate this JSON (DO NOT INCLUDE the notation just the plain JSON, so no backticks json preceding and no ending backticks): {suggestions: [suggestion, suggestion, suggestion], rewrites: [{title, institution, description}, ...]} with each suggestion being a short suggestion about the resume Education section and a final rewrite in a length that would be appropriate for each field, in the same language as input language. Do not answer back any other text just the plain JSON. This is the input Education JSON:
+                ${JSON.stringify(resume.education)}.
                 This is some extra context:
                 Bio: ${resume.bio}
                 Name: ${resume.name}
-                Length of experiences array: ${resume.experience.length}
+                Experience: ${JSON.stringify(resume.experience)}
+                Length of education array: ${resume.education.length}
                 (Answer in input language). No placeholders, all text should be final. No brackets to fill in, no blanks.`;
 
             const apiUrl =
@@ -55,34 +56,33 @@ const WorkExperience = () => {
         }
     };
 
-    const handleAddExperience = () => {
-        const newExperience: Experience = {
-            position: "",
-            company: "",
+    const handleAddStudy = () => {
+        const newStudy: Study = {
+            title: "",
+            institution: "",
             startDate: "",
             endDate: "",
             description: "",
-            skills: [],
         };
 
         dispatch(
-            updateExperience({
-                index: resume.experience.length,
-                newExperience: newExperience,
+            updateEducation({
+                index: resume.education.length,
+                newStudy: newStudy,
             })
         );
     };
 
-    const handleChangeExperienceField = (
+    const handleChangeStudyField = (
         index: number,
-        field: keyof Experience,
+        field: keyof Study,
         value: string
     ) => {
         dispatch(
-            updateExperience({
+            updateEducation({
                 index,
-                newExperience: {
-                    ...resume.experience[index],
+                newStudy: {
+                    ...resume.education[index],
                     [field]: value,
                 },
             })
@@ -101,7 +101,7 @@ const WorkExperience = () => {
 
     const animateThinkingSteps = async () => {
         let i = 0;
-        for (i = 0; i < resume.experience.length; i++) {
+        for (i = 0; i < resume.education.length; i++) {
             setThinkingStep((prev) => prev + 1);
             await delay(300);
         }
@@ -111,20 +111,20 @@ const WorkExperience = () => {
 
     const handleReplace = (index: number) => {
         if (!rewrites[index]) return;
-        dispatch(updateExperience({ index, newExperience: rewrites[index] }));
+        dispatch(updateEducation({ index, newStudy: rewrites[index] }));
         clearRewrite(index);
         setReplaceHoverIndex(-1);
     };
 
-    const handleRemoveExperience = (index: number) => {
-        dispatch(removeExperience(index));
+    const handleRemoveStudy = (index: number) => {
+        dispatch(removeEducation(index));
         setRewrites((prev) => prev.filter((_, i) => i !== index));
     };
 
     return (
-        <section id="experience" className="mt-3 relative group">
+        <section id="education" className="mt-3 relative group">
             <hr className="mb-3"></hr>
-            <h2 className="mx-2 text-2xl font-bold mb-3">Experience</h2>
+            <h2 className="mx-2 text-2xl font-bold mb-3">Education</h2>
             <SuggestionsButton
                 onClick={handleSuggestions}
                 className="top-4 -left-5"
@@ -145,35 +145,35 @@ const WorkExperience = () => {
                     ))}
                 </ul>
             )}
-            {resume.experience.map((experience, index) => (
+            {resume.education.map((study, index) => (
                 <div key={index} className="relative group/suggestion">
                     {index > 0 && <hr className="my-3"></hr>}
                     <div className="w-full max-w-full flex gap-2">
                         <TextField
-                            name="position"
-                            placeholder="Position"
+                            name="title"
+                            placeholder="Title"
                             onChange={(e) =>
-                                handleChangeExperienceField(
+                                handleChangeStudyField(
                                     index,
-                                    "position",
+                                    "title",
                                     e.target.value
                                 )
                             }
                             className="font-semibold w-full"
-                            value={experience.position}
+                            value={study.title}
                         />
                         <TextField
-                            name="company"
-                            placeholder="Company"
+                            name="Institution"
+                            placeholder="institution"
                             onChange={(e) =>
-                                handleChangeExperienceField(
+                                handleChangeStudyField(
                                     index,
-                                    "company",
+                                    "institution",
                                     e.target.value
                                 )
                             }
                             className="w-full"
-                            value={experience.company}
+                            value={study.institution}
                         />
                     </div>
                     <div className="mt-1 mb-2">
@@ -184,13 +184,13 @@ const WorkExperience = () => {
                     <TextArea
                         name="description"
                         onChange={(e) =>
-                            handleChangeExperienceField(
+                            handleChangeStudyField(
                                 index,
                                 "description",
                                 e.target.value
                             )
                         }
-                        value={experience.description}
+                        value={study.description || ""}
                         replaceHover={replaceHoverIndex === index}
                         animateThinking={thinkingStep > index}
                     />
@@ -262,7 +262,7 @@ const WorkExperience = () => {
                         </>
                     )}
                     <Button
-                        onClick={() => handleRemoveExperience(index)}
+                        onClick={() => handleRemoveStudy(index)}
                         accent
                         className="w-min absolute -right-2 translate-x-full opacity-0 top-1/2 -translate-y-1/2 group-hover/suggestion:opacity-100 hover:opacity-100"
                     >
@@ -271,7 +271,7 @@ const WorkExperience = () => {
                 </div>
             ))}
             <button
-                onClick={handleAddExperience}
+                onClick={handleAddStudy}
                 className="bg-black bg-opacity-5 p-1 w-full rounded-md hover:bg-opacity-10 active:bg-opacity-15 flex justify-center"
             >
                 <svg
@@ -293,4 +293,4 @@ const WorkExperience = () => {
     );
 };
 
-export default WorkExperience;
+export default Education;

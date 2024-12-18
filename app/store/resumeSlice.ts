@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Experience, Resume } from "../types/resume";
+import { Experience, Resume, Study } from "../types/resume";
 
 const initialState: Resume = {
     name: "",
     bio: "",
     experience: [],
+    education: [],
 };
 
 const resumeSlice = createSlice({
@@ -27,11 +28,45 @@ const resumeSlice = createSlice({
             } else if (index === state.experience.length) {
                 state.experience.push(newExperience);
             } else {
-                console.error("Invalid index for experience update");
+                console.error("Invalid index.");
+            }
+        },
+        removeExperience(state, action: PayloadAction<number>) {
+            const index = action.payload;
+            if (index >= 0 && index < state.experience.length) {
+                state.experience.splice(index, 1);
+            } else {
+                console.error("Invalid index.");
+            }
+        },
+        updateEducation(
+            state,
+            action: PayloadAction<{index: number, newStudy: Study }>
+        ) {
+            const { index, newStudy } = action.payload;
+            if (index >= 0 && index < state.education.length ) {
+                state.education[index] = newStudy;
+            } else if (index === state.education.length) {
+                state.education.push(newStudy);
+            } else {
+                console.error("Invalid index.");
+            }
+        },
+        removeEducation(state, action: PayloadAction<number>) {
+            const index = action.payload;
+            if (index >= 0 && index < state.education.length) {
+                state.education.splice(index, 1);
+            } else {
+                console.error("Invalid index.");
             }
         }
     }
 });
 
-export const { updateName, updateBio, updateExperience } = resumeSlice.actions;
+export const { updateName, 
+    updateBio, 
+    updateExperience, 
+    removeExperience,
+    updateEducation, 
+    removeEducation } = resumeSlice.actions;
 export default resumeSlice.reducer;

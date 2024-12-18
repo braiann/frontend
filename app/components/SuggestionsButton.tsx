@@ -8,7 +8,7 @@ const SuggestionsButton = ({
     return (
         <button
             onClick={onClick}
-            className={`absolute opacity-0 group-hover:opacity-100 opacity drop-shadow-none scale-1 hover:brightness-105 hover:drop-shadow-[0_1px_1px_rgba(226,220,245,1)] hover:scale-110 ${className}`}
+            className={`absolute opacity-0 group-hover:opacity-100 opacity drop-shadow-none transition-all scale-1 hover:brightness-105 hover:drop-shadow-[0_1px_1px_rgba(226,220,245,1)] hover:scale-110 ${className}`}
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
