@@ -6,6 +6,7 @@ const initialState: Resume = {
     bio: "",
     experience: [],
     education: [],
+    skills: []
 };
 
 const resumeSlice = createSlice({
@@ -59,6 +60,19 @@ const resumeSlice = createSlice({
             } else {
                 console.error("Invalid index.");
             }
+        },
+        addSkill(state, action: PayloadAction<string>) {
+            if (action.payload) {
+                state.skills.push(action.payload);
+            }
+        },
+        removeSkill(state, action: PayloadAction<number>) {
+            const index = action.payload;
+            if (index >= 0 && index < state.skills.length) {
+                state.skills.splice(index, 1);
+            } else {
+                console.error("Invalid index.");
+            }
         }
     }
 });
@@ -68,5 +82,8 @@ export const { updateName,
     updateExperience, 
     removeExperience,
     updateEducation, 
-    removeEducation } = resumeSlice.actions;
+    removeEducation,
+    addSkill,
+    removeSkill
+} = resumeSlice.actions;
 export default resumeSlice.reducer;

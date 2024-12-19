@@ -12,7 +12,6 @@ import Cross from "./icons/Cross";
 
 const Bio = () => {
     const resume: Resume = useSelector((state: RootState) => state.resume);
-    0;
     const dispatch = useDispatch();
 
     const [suggestions, setSuggestions] = useState<string[]>([]);

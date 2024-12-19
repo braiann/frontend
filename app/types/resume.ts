@@ -3,6 +3,7 @@ export interface Resume {
     bio?: string;
     experience: Experience[];
     education: Study[];
+    skills: string[];
 }
 
 export interface Experience {
