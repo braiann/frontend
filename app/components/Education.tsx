@@ -291,7 +291,7 @@ const Education = ({ animatingOut }: { animatingOut: boolean }) => {
             ))}
             <button
                 onClick={handleAddStudy}
-                className="bg-black bg-opacity-5 p-1 w-full rounded-md hover:bg-opacity-10 active:bg-opacity-15 flex justify-center"
+                className="bg-black bg-opacity-[0] p-1 w-full rounded-md transition-all hover:bg-opacity-5 active:bg-opacity-15 flex justify-center"
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"

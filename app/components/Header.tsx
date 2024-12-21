@@ -18,7 +18,7 @@ const Header = ({
     return h1 ? (
         <h1>{children}</h1>
     ) : h2 ? (
-        <h2 className="mx-2 text-2xl font-bold mb-3 w-screen max-w-sm">
+        <h2 className="mx-2 text-2xl font-bold mb-3 w-screen max-w-sm select-none">
             {children}
         </h2>
     ) : h3 ? (

@@ -8,7 +8,7 @@ const AddMoreSections = ({
     return (
         <section
             id="add-more-sections"
-            className={`relative group animate-blur-zoom-in ${
+            className={`relative group animate-blur-zoom-in select-none ${
                 animatingOut ? "animate-blur-zoom-out" : ""
             }`}
         >

@@ -77,11 +77,11 @@ export default function Home() {
                     >
                         {steps[step]}
                         <Spacer size="2.5rem" />
-                        <div className="flex justify-between -mb-8 -mx-8">
+                        <div className="flex justify-between -mb-8 -mx-8 select-none">
                             {step > 0 ? (
                                 <button
                                     onClick={handleGoToPreviousStep}
-                                    className="text-teal-600 select-none   rounded-full w-12 transition-all opacity-100 h-w-12 aspect-square text-xl brightness-100 hover:opacity-70 active:brightness-90 active:opacity-100"
+                                    className="text-teal-600 rounded-full w-12 transition-all opacity-100 h-w-12 aspect-square text-xl brightness-100 hover:opacity-70 active:brightness-90 active:opacity-100"
                                 >
                                     {"<-"}
                                 </button>
