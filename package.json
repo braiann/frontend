@@ -16,6 +16,7 @@
     "next": "15.1.0",
     "openai": "^4.76.1",
     "react": "^19.0.0",
+    "react-animate-height": "^3.2.3",
     "react-dom": "^19.0.0",
     "react-redux": "^9.2.0"
   },

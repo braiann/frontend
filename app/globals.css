@@ -130,3 +130,43 @@ input[type="date"] {
         background-size: 100% 100%;
     }
 }
+
+.animate-blur-zoom-in {
+    animation: blur-zoom-in;
+    animation-duration: 0.3s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+.animate-blur-zoom-out {
+    animation: blur-zoom-out;
+    animation-duration: 0.3s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+@keyframes blur-zoom-in {
+    0% {
+        filter: blur(10);
+        scale: 0.9;
+        opacity: 0;
+    }
+    100% {
+        filter: blur(0);
+        scale: 1;
+        opacity: 1;
+    }
+}
+
+@keyframes blur-zoom-out {
+    0% {
+        filter: blur(0);
+        scale: 1;
+        opacity: 1;
+    }
+    100% {
+        filter: blur(10);
+        scale: 0.9;
+        opacity: 0;
+    }
+}

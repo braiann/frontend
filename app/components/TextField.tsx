@@ -26,8 +26,8 @@ const TextField = ({
             onChange={onChange}
             autoFocus={autofocus}
             className={`${
-                value ? "ring-0" : "ring-2"
-            } ring-black ring-opacity-10 px-2 outline-none rounded-md bg-transparent ${
+                value ? "ring-0" : "ring-[1px]"
+            } ring-black ring-opacity-5 px-2 outline-none rounded-md bg-transparent ${
                 className || ""
             } ${instrumentSans}`}
         />

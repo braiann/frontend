@@ -7,7 +7,7 @@ import { useState } from "react";
 import SuggestionsButton from "./SuggestionsButton";
 import removeByIndex from "../utils/removeByIndex";
 
-const Skills = () => {
+const Skills = ({ animatingOut }: { animatingOut: boolean }) => {
     const resume: Resume = useSelector((state: RootState) => state.resume);
     const dispatch = useDispatch();
 
@@ -60,7 +60,12 @@ const Skills = () => {
     };
 
     return (
-        <section id="skills" className="relative group">
+        <section
+            id="skills"
+            className={`relative group animate-blur-zoom-in ${
+                animatingOut ? "animate-blur-zoom-out" : ""
+            }`}
+        >
             <h2 className="mx-2 text-2xl font-bold mb-3 w-screen max-w-sm">
                 Skills
             </h2>
