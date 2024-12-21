@@ -60,9 +60,10 @@ const Skills = () => {
     };
 
     return (
-        <section id="skills" className="mt-3 relative group">
-            <hr className="mb-3"></hr>
-            <h2 className="mx-2 text-2xl font-bold mb-3">Skills</h2>
+        <section id="skills" className="relative group">
+            <h2 className="mx-2 text-2xl font-bold mb-3 w-screen max-w-sm">
+                Skills
+            </h2>
             <SuggestionsButton
                 onClick={handleSuggestions}
                 className="top-4 -left-5"

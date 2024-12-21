@@ -122,9 +122,10 @@ const Education = () => {
     };
 
     return (
-        <section id="education" className="mt-3 relative group">
-            <hr className="mb-3"></hr>
-            <h2 className="mx-2 text-2xl font-bold mb-3">Education</h2>
+        <section id="education" className="relative group">
+            <h2 className="mx-2 text-2xl font-bold mb-3 w-screen max-w-sm">
+                Education
+            </h2>
             <SuggestionsButton
                 onClick={handleSuggestions}
                 className="top-4 -left-5"

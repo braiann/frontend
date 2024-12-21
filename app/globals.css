@@ -3,88 +3,86 @@
 @tailwind utilities;
 
 :root {
-  --background: #FAF9F0;
-  --foreground: #171717;
+    --background: #faf9f0;
+    --foreground: #171717;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: 'Instrument Sans';
+    color: var(--foreground);
+    background: var(--background);
+    font-family: "Instrument Sans";
 }
 
 button {
-  outline: none;
+    outline: none;
 }
 
 label {
-  font-weight: 600;
+    font-weight: 600;
 }
 
 .bg-zoom {
-  background-size: 1400%;
-  background-position: bottom right;
-  transition: background-image 1s ease-in-out;
-  transition: box-shadow 1s ease-in-out;
-  box-shadow: 0 0 0 rgba(0,0,0,0), 0 0 0 rgba(0,0,0,0);
+    background-size: 1400%;
+    background-position: bottom right;
+    transition: background-image 1s ease-in-out;
+    transition: box-shadow 1s ease-in-out;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0), 0 0 0 rgba(0, 0, 0, 0);
 }
 
 .toggle-thinking {
-  animation-name: thinking;
-  animation-duration: 2s;
-  animation-timing-function: ease-in-out;
+    animation-name: thinking;
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
 }
 
 @keyframes thinking {
-  0% {
-    background-position: bottom right;
-    opacity: 1;
-    scale: 1;
-    filter: blur(0);
-  }
-  30% {
-    opacity: 0.4;
-    scale: 0.98;
-    filter: blur(1);
-  }
-  70% {
-    color: 1;
-    scale: 1;
-    filter: blur(0);
-  }
-  100% {
-    background-position: center center;
-  }
+    0% {
+        background-position: bottom right;
+        opacity: 1;
+        scale: 1;
+        filter: blur(0);
+    }
+    30% {
+        opacity: 0.4;
+        scale: 0.98;
+        filter: blur(1);
+    }
+    70% {
+        color: 1;
+        scale: 1;
+        filter: blur(0);
+    }
+    100% {
+        background-position: center center;
+    }
 }
 
 .animate-blurpulse {
-  animation-name: blur-pulse;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
-  box-shadow:
-    2px 2px 20px rgba(15,244,198,1),
-    -2px -2px 20px rgba(214,143,214,1)
-  ;
+    animation-name: blur-pulse;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    box-shadow: 2px 2px 20px rgba(15, 244, 198, 1),
+        -2px -2px 20px rgba(214, 143, 214, 1);
 }
 
 @keyframes blur-pulse {
-  0% {
-    filter: blur(0);
-    color: initial;
-  }
-  50% {
-    filter: blur(1);
-    color: rgba(214,143,214,1);
-  }
-  65% {
-    filter: blur(1);
-    color: rgba(15,244,198,1);
-  }
-  100%{
-    filter: blur(0);
-    color: initial;
-  }
+    0% {
+        filter: blur(0);
+        color: initial;
+    }
+    50% {
+        filter: blur(1);
+        color: rgba(214, 143, 214, 1);
+    }
+    65% {
+        filter: blur(1);
+        color: rgba(15, 244, 198, 1);
+    }
+    100% {
+        filter: blur(0);
+        color: initial;
+    }
 }
 
 input[type="date"]::-webkit-inner-spin-button,
@@ -94,5 +92,41 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 input[type="date"] {
-  outline: none;
+    outline: none;
+}
+
+@keyframes moveBackground {
+    0% {
+        background-size: 100% 100%;
+    }
+    10% {
+        background-size: 120% 80%;
+    }
+    20% {
+        background-size: 190% 140%;
+    }
+    30% {
+        background-size: 130% 110%;
+    }
+    40% {
+        background-size: 150% 120%;
+    }
+    50% {
+        background-size: 180% 100%;
+    }
+    60% {
+        background-size: 220% 80%;
+    }
+    70% {
+        background-size: 100% 50%;
+    }
+    80% {
+        background-size: 120% 70%;
+    }
+    90% {
+        background-size: 110% 90%;
+    }
+    100% {
+        background-size: 100% 100%;
+    }
 }

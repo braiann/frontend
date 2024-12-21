@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Instrument_Sans } from "next/font/google";
 import "./globals.css";
 import ReduxProvider from "./components/ReduxProvider";
+import GradientBackground from "./components/GradientBackground";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -27,7 +28,10 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${instrumentSans}} antialiased`}>
+            <body
+                className={`${instrumentSans}} antialiased relative min-h-screen bg-[hsla(224,25%,60%,1)] flex py-10 items-center`}
+            >
+                <GradientBackground />
                 <ReduxProvider>{children}</ReduxProvider>
             </body>
         </html>

@@ -122,9 +122,10 @@ const WorkExperience = () => {
     };
 
     return (
-        <section id="experience" className="mt-3 relative group">
-            <hr className="mb-3"></hr>
-            <h2 className="mx-2 text-2xl font-bold mb-3">Experience</h2>
+        <section id="experience" className="relative group">
+            <h2 className="mx-2 text-2xl font-bold mb-3 w-screen max-w-sm">
+                Experience
+            </h2>
             <SuggestionsButton
                 onClick={handleSuggestions}
                 className="top-4 -left-5"
