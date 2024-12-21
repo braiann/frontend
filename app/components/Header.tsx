@@ -16,13 +16,13 @@ const Header = ({
     children: React.ReactNode;
 }) => {
     return h1 ? (
-        <h1>{children}</h1>
+        <h1 className="text-4xl">{children}</h1>
     ) : h2 ? (
         <h2 className="mx-2 text-2xl font-bold mb-3 w-screen max-w-sm select-none">
             {children}
         </h2>
     ) : h3 ? (
-        <h3>{children}</h3>
+        <h3 className="text-lg font-semibold">{children}</h3>
     ) : h4 ? (
         <h4>{children}</h4>
     ) : h5 ? (
