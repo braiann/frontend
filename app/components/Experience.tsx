@@ -11,6 +11,7 @@ import { RootState } from "../store";
 import { removeExperience, updateExperience } from "../store/resumeSlice";
 import Button from "./Button";
 import Checkmark from "./icons/Checkmark";
+import Header from "./Header";
 
 const WorkExperience = ({ animatingOut }: { animatingOut: boolean }) => {
     const resume: Resume = useSelector((state: RootState) => state.resume);
@@ -128,9 +129,7 @@ const WorkExperience = ({ animatingOut }: { animatingOut: boolean }) => {
                 animatingOut ? "animate-blur-zoom-out" : ""
             }`}
         >
-            <h2 className="mx-2 text-2xl font-bold mb-3 w-screen max-w-sm">
-                Experience
-            </h2>
+            <Header h2>Experience</Header>
             <SuggestionsButton
                 onClick={handleSuggestions}
                 className="top-4 -left-5"

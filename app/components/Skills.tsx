@@ -6,6 +6,7 @@ import { addSkill, removeSkill } from "../store/resumeSlice";
 import { useState } from "react";
 import SuggestionsButton from "./SuggestionsButton";
 import removeByIndex from "../utils/removeByIndex";
+import Header from "./Header";
 
 const Skills = ({ animatingOut }: { animatingOut: boolean }) => {
     const resume: Resume = useSelector((state: RootState) => state.resume);
@@ -66,9 +67,7 @@ const Skills = ({ animatingOut }: { animatingOut: boolean }) => {
                 animatingOut ? "animate-blur-zoom-out" : ""
             }`}
         >
-            <h2 className="mx-2 text-2xl font-bold mb-3 w-screen max-w-sm">
-                Skills
-            </h2>
+            <Header h2>Skills</Header>
             <SuggestionsButton
                 onClick={handleSuggestions}
                 className="top-4 -left-5"
