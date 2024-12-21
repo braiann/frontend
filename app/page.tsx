@@ -49,8 +49,10 @@ export default function Home() {
     const handleGoToNextStep = async () => {
         if (step + 1 >= steps.length) return;
         setAnimatingOut(true);
+        console.log(animatingOut);
         setTimeout(() => {
             setAnimatingOut(false);
+            console.log(animatingOut);
             setStep((prev) => prev + 1);
         }, 300);
     };
@@ -58,8 +60,10 @@ export default function Home() {
     const handleGoToPreviousStep = async () => {
         if (step - 1 < 0) return;
         setAnimatingOut(true);
+        console.log(animatingOut);
         setTimeout(() => {
             setAnimatingOut(false);
+            console.log(animatingOut);
             setStep((prev) => prev - 1);
         }, 300);
     };
