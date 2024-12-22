@@ -147,12 +147,12 @@ input[type="date"] {
 
 @keyframes blur-zoom-in {
     0% {
-        filter: blur(10);
+        filter: blur(10px);
         scale: 0.9;
         opacity: 0;
     }
     100% {
-        filter: blur(0);
+        filter: blur(0px);
         scale: 1;
         opacity: 1;
     }
@@ -160,12 +160,12 @@ input[type="date"] {
 
 @keyframes blur-zoom-out {
     0% {
-        filter: blur(0);
+        filter: blur(0px);
         scale: 1;
         opacity: 1;
     }
     100% {
-        filter: blur(10);
+        filter: blur(10px);
         scale: 0.9;
         opacity: 0;
     }

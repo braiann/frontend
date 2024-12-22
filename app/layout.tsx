@@ -7,7 +7,7 @@ import GradientBackground from "./components/GradientBackground";
 const instrumentSans = Instrument_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-    title: "Resume Builder",
+    title: "Resumate",
     description:
         "Get tips on how to build a more professional resume with generative artificial intelligence to help you get the job you want.",
 };
