@@ -83,6 +83,8 @@ export default function Home() {
                 console.log(e);
             }
         };
+
+        warmUpServer();
     }, []);
 
     return (
