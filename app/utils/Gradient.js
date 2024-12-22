@@ -25,10 +25,15 @@ function normalizeColor(hexCode) {
             antialias: true
         }), this.meshes = [];
         const context = this.gl;
-        width && height && this.setSize(width, height), this.lastDebugMsg, this.debug = debug && debug_output ? (e) => {
+        if (width && height) this.setSize(width, height);
+        this.lastDebugMsg = null;
+        this.debug = debug && debug_output ? (e) => {
             const t = new Date;
-            t - this.lastDebugMsg > 1e3 && console.log("---"), console.log(t.toLocaleTimeString() + Array(Math.max(0, 32 - e.length)).join(" ") + e + ": ", ...Array.from(arguments).slice(1)), this.lastDebugMsg = t
-        } : () => {}, Object.defineProperties(this, {
+            if (t - this.lastDebugMsg > 1e3) console.log("---");
+            console.log(t.toLocaleTimeString() + Array(Math.max(0, 32 - e.length)).join(" ") + e + ": ", ...Array.from(arguments).slice(1));
+            this.lastDebugMsg = t;
+        } : () => {};
+        Object.defineProperties(this, {
             Material: {
                 enumerable: false,
                 value: class {

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Instrument_Sans } from "next/font/google";
+import { Instrument_Sans } from "next/font/google";
 import "./globals.css";
 import ReduxProvider from "./components/ReduxProvider";
 import GradientBackground from "./components/GradientBackground";
