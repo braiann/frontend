@@ -43,21 +43,28 @@ function normalizeColor(hexCode) {
                         const material = this;
                         function getShaderByType(type, source) {
                             const shader = context.createShader(type);
-                            return context.shaderSource(shader, source), context.compileShader(shader), context.getShaderParameter(shader, context.COMPILE_STATUS) || console.error(context.getShaderInfoLog(shader)), _miniGl.debug("Material.compileShaderSource", {
+                            context.shaderSource(shader, source);
+                            context.compileShader(shader);
+                            if (!context.getShaderParameter(shader, context.COMPILE_STATUS)) {
+                                console.error(context.getShaderInfoLog(shader));
+                            }
+                            this.debug("Material.compileShaderSource", {
                                 source: source
-                            }), shader
+                            });
+                            return shader;
                         }
                         function getUniformVariableDeclarations(uniforms, type) {
                             return Object.entries(uniforms).map(([uniform, value]) => value.getDeclaration(uniform, type)).join("\n")
                         }
-                        material.uniforms = uniforms, material.uniformInstances = [];
+                        material.uniforms = uniforms;
+                        material.uniformInstances = [];
   
                         const prefix = "\n              precision highp float;\n            ";
-                        material.vertexSource = `\n              ${prefix}\n              attribute vec4 position;\n              attribute vec2 uv;\n              attribute vec2 uvNorm;\n              ${getUniformVariableDeclarations(_miniGl.commonUniforms,"vertex")}\n              ${getUniformVariableDeclarations(uniforms,"vertex")}\n              ${vertexShaders}\n            `,
-                        material.Source = `\n              ${prefix}\n              ${getUniformVariableDeclarations(_miniGl.commonUniforms,"fragment")}\n              ${getUniformVariableDeclarations(uniforms,"fragment")}\n              ${fragments}\n            `,
+                        material.vertexSource = `\n              ${prefix}\n              attribute vec4 position;\n              attribute vec2 uv;\n              attribute vec2 uvNorm;\n              ${getUniformVariableDeclarations(this.commonUniforms,"vertex")}\n              ${getUniformVariableDeclarations(uniforms,"vertex")}\n              ${vertexShaders}\n            `;
+                        material.Source = `\n              ${prefix}\n              ${getUniformVariableDeclarations(this.commonUniforms,"fragment")}\n              ${getUniformVariableDeclarations(uniforms,"fragment")}\n              ${fragments}\n            `;
                         material.vertexShader = getShaderByType(context.VERTEX_SHADER, material.vertexSource),
-                        material.fragmentShader = getShaderByType(context.FRAGMENT_SHADER, material.Source),
-                        material.program = context.createProgram(),
+                        material.attachUniforms(void 0, this.commonUniforms);
+                        material.attachUniforms(void 0, material.uniforms);
                         context.attachShader(material.program, material.vertexShader),
                         context.attachShader(material.program, material.fragmentShader),
                         context.linkProgram(material.program),
