@@ -1,6 +1,7 @@
 const GradientBackground = () => {
     return (
         <div
+            className="hidden sm:block"
             style={{
                 position: "absolute",
                 top: 0,

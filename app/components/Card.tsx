@@ -43,7 +43,7 @@ const Card = ({
                 {children}
             </div>
             <div
-                className={`absolute -z-10 ${
+                className={`absolute hidden sm:block -z-10 ${
                     fullscreen ? " bg-opacity-30" : " bg-opacity-65"
                 } left-0 w-full  top-1/2 bg-white ring-2 rounded-3xl ring-black ring-opacity-5  -translate-y-1/2 transition-all -z-10"`}
                 style={{ height: height + 80 }}
