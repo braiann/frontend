@@ -21,7 +21,7 @@ const GradientBackground = () => {
 
                 backgroundSize: "150% 150%",
                 filter: "blur(80px) saturate(0.3) brightness(2.5)",
-                animation: "moveBackground 40s ease-in-out infinite",
+                animation: "moveBackground 30s ease-in-out infinite",
             }}
         ></div>
     );
