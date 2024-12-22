@@ -3,6 +3,7 @@ import { Instrument_Sans } from "next/font/google";
 import "./globals.css";
 import ReduxProvider from "./components/ReduxProvider";
 import GradientBackground from "./components/GradientBackground";
+import Head from "next/head";
 
 const instrumentSans = Instrument_Sans({ subsets: ["latin"] });
 
@@ -10,6 +11,12 @@ export const metadata: Metadata = {
     title: "Resume Builder",
     description:
         "Get tips on how to build a more professional resume with generative artificial intelligence to help you get the job you want.",
+};
+
+export const viewport = {
+    initialScale: 1.0,
+    maximumScale: 1.0,
+    width: "device-width",
 };
 
 export default function RootLayout({
