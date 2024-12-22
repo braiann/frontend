@@ -40,7 +40,7 @@ const Education = ({ animatingOut }: { animatingOut: boolean }) => {
                 (Answer in input language). No placeholders, all text should be final. No brackets to fill in, no blanks.`;
 
             const apiUrl =
-                process.env.GENERATE_API_URL ||
+                process.env.NEXT_PUBLIC_GENERATE_API_URL ||
                 "http://localhost:5000/api/generate";
             const response = await fetch(apiUrl, {
                 method: "POST",

@@ -12,7 +12,6 @@ import { Resume } from "./types/resume";
 import WorkExperience from "./components/Experience";
 import Education from "./components/Education";
 import Skills from "./components/Skills";
-import GradientBackground from "./components/GradientBackground";
 import Card from "./components/Card";
 import AddMoreSections from "./components/AddMoreSections";
 import FinalReview from "./components/FinalReview";
@@ -27,11 +26,13 @@ export default function Home() {
 
     const steps = [
         <div
+            key={0}
             className={`animate-blur-zoom-in ${
                 animatingOut ? "animate-blur-zoom-out" : ""
             }`}
         >
             <TextField
+                key={1}
                 name="name"
                 value={resume.name}
                 onChange={(e) => dispatch(updateName(e.target.value))}
@@ -42,11 +43,11 @@ export default function Home() {
             <Spacer size="20px" />
             <Bio />
         </div>,
-        <WorkExperience animatingOut={animatingOut} />,
-        <Education animatingOut={animatingOut} />,
-        <Skills animatingOut={animatingOut} />,
-        <AddMoreSections animatingOut={animatingOut} />,
-        <FinalReview />,
+        <WorkExperience key={2} animatingOut={animatingOut} />,
+        <Education key={3} animatingOut={animatingOut} />,
+        <Skills key={4} animatingOut={animatingOut} />,
+        <AddMoreSections key={5} animatingOut={animatingOut} />,
+        <FinalReview key={6} />,
     ];
 
     const handleGoToNextStep = async () => {

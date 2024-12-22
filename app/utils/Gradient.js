@@ -20,16 +20,15 @@ function normalizeColor(hexCode) {
   //n = height
   class MiniGl {
     constructor(canvas, width, height, debug = false) {
-        const _miniGl = this,
-            debug_output = -1 !== document.location.search.toLowerCase().indexOf("debug=webgl");
-        _miniGl.canvas = canvas, _miniGl.gl = _miniGl.canvas.getContext("webgl", {
+            const debug_output = -1 !== document.location.search.toLowerCase().indexOf("debug=webgl");
+        this.canvas = canvas, this.gl = this.canvas.getContext("webgl", {
             antialias: true
-        }), _miniGl.meshes = [];
-        const context = _miniGl.gl;
-        width && height && this.setSize(width, height), _miniGl.lastDebugMsg, _miniGl.debug = debug && debug_output ? function(e) {
+        }), this.meshes = [];
+        const context = this.gl;
+        width && height && this.setSize(width, height), this.lastDebugMsg, this.debug = debug && debug_output ? (e) => {
             const t = new Date;
-            t - _miniGl.lastDebugMsg > 1e3 && console.log("---"), console.log(t.toLocaleTimeString() + Array(Math.max(0, 32 - e.length)).join(" ") + e + ": ", ...Array.from(arguments).slice(1)), _miniGl.lastDebugMsg = t
-        } : () => {}, Object.defineProperties(_miniGl, {
+            t - this.lastDebugMsg > 1e3 && console.log("---"), console.log(t.toLocaleTimeString() + Array(Math.max(0, 32 - e.length)).join(" ") + e + ": ", ...Array.from(arguments).slice(1)), this.lastDebugMsg = t
+        } : () => {}, Object.defineProperties(this, {
             Material: {
                 enumerable: false,
                 value: class {
