@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TextField from "./components/TextField";
 import Spacer from "./components/Spacer";
 import Bio from "./components/Bio";
@@ -71,6 +71,19 @@ export default function Home() {
             setStep((prev) => prev - 1);
         }, 300);
     };
+
+    useEffect(() => {
+        const warmUpServer = async () => {
+            try {
+                const response = await fetch("/api/warmup");
+                if (!response.ok) {
+                    throw new Error("Failed to contact server");
+                }
+            } catch (e) {
+                console.log(e);
+            }
+        };
+    }, []);
 
     return (
         <Provider store={store}>
